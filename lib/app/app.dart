@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 import '../core/theme/app_theme.dart';
+import 'package:numo/features/learner/presentation/pages/learners_page.dart';
 
 class NumoApp extends StatelessWidget {
   const NumoApp({super.key});
@@ -12,17 +13,7 @@ class NumoApp extends StatelessWidget {
       title: 'Numo',
       theme: AppTheme.light,
       debugShowCheckedModeBanner: false,
-      home: const Scaffold(
-        body: Center(
-          child: Text(
-            'Numo 2.0',
-            style: TextStyle(
-              fontSize: 28,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-      ),
+      home: const LearnersPage(),
     );
   }
 }
