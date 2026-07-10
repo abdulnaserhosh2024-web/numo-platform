@@ -1,93 +1,43 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../shared/design_system/components/cards/app_card.dart';
 import '../../../../shared/design_system/tokens/app_spacing.dart';
 import '../../../../shared/design_system/tokens/app_typography.dart';
-import '../providers/learners_provider.dart';
-import '../widgets/learner_card.dart';
+import '../../domain/entities/learner.dart';
 
-class LearnersPage extends ConsumerWidget {
-  const LearnersPage({super.key});
+class LearnerCard extends StatelessWidget {
+  const LearnerCard({required this.learner, this.onTap, super.key});
+
+  final Learner learner;
+  final VoidCallback? onTap;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final learnersAsync = ref.watch(learnersProvider);
+  Widget build(BuildContext context) {
+    final initial = learner.fullName.trim().isEmpty
+        ? '?'
+        : learner.fullName.trim()[0].toUpperCase();
 
-    return Scaffold(
-      appBar: AppBar(title: const Text('Learners')),
-      body: learnersAsync.when(
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, stackTrace) => Center(
-          child: Padding(
-            padding: const EdgeInsets.all(AppSpacing.lg),
+    return AppCard(
+      onTap: onTap,
+      child: Row(
+        children: [
+          CircleAvatar(radius: 24, child: Text(initial)),
+          const SizedBox(width: AppSpacing.md),
+          Expanded(
             child: Column(
-              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Text(learner.fullName, style: AppTypography.title),
+                const SizedBox(height: AppSpacing.xs),
                 Text(
-                  'Something went wrong.',
-                  style: AppTypography.title,
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: AppSpacing.sm),
-                Text(
-                  error.toString(),
+                  learner.status.name.toUpperCase(),
                   style: AppTypography.caption,
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: AppSpacing.md),
-                FilledButton(
-                  onPressed: () {
-                    ref.read(learnersProvider.notifier).refresh();
-                  },
-                  child: const Text('Try again'),
                 ),
               ],
             ),
           ),
-        ),
-        data: (learners) {
-          if (learners.isEmpty) {
-            return Center(
-              child: Padding(
-                padding: const EdgeInsets.all(AppSpacing.lg),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text('No learners yet', style: AppTypography.title),
-                    const SizedBox(height: AppSpacing.sm),
-                    Text(
-                      'Add your first learner.',
-                      style: AppTypography.caption,
-                    ),
-                  ],
-                ),
-              ),
-            );
-          }
-
-          return RefreshIndicator(
-            onRefresh: () {
-              return ref.read(learnersProvider.notifier).refresh();
-            },
-            child: ListView.separated(
-              padding: const EdgeInsets.all(AppSpacing.lg),
-              itemCount: learners.length,
-              separatorBuilder: (_, __) {
-                return const SizedBox(height: AppSpacing.md);
-              },
-              itemBuilder: (context, index) {
-                final learner = learners[index];
-
-                return LearnerCard(
-                  learner: learner,
-                  onTap: () {
-                    // TODO: فتح Learning Workspace الخاصة بالمتعلم.
-                  },
-                );
-              },
-            ),
-          );
-        },
+          const Icon(Icons.chevron_right),
+        ],
       ),
     );
   }
