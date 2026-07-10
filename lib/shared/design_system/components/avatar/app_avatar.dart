@@ -1,14 +1,9 @@
-
 import 'package:flutter/material.dart';
 
 import '../../tokens/app_colors.dart';
 import '../../tokens/app_typography.dart';
 
-enum AppAvatarSize {
-  small,
-  medium,
- large,
-}
+enum AppAvatarSize { small, medium, large }
 
 class AppAvatar extends StatelessWidget {
   const AppAvatar({
@@ -32,9 +27,7 @@ class AppAvatar extends StatelessWidget {
       AppAvatarSize.large => 64.0,
     };
 
-    final initial = name.trim().isEmpty
-        ? '?'
-        : name.trim()[0].toUpperCase();
+    final initial = name.trim().isEmpty ? '?' : name.trim()[0].toUpperCase();
 
     if (imageUrl != null && imageUrl!.isNotEmpty) {
       return CircleAvatar(
