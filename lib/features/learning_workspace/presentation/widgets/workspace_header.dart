@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import '../../../../shared/design_system/components/avatar/app_avatar.dart';
@@ -32,17 +31,11 @@ class WorkspaceHeader extends StatelessWidget {
 
         const SizedBox(height: AppSpacing.md),
 
-        Text(
-          fullName,
-          style: AppTypography.headline,
-        ),
+        Text(fullName, style: AppTypography.headline),
 
         const SizedBox(height: AppSpacing.sm),
 
-        StatusBadge(
-          label: status.label,
-          type: status.badgeType,
-        ),
+        StatusBadge(label: status.label, type: status.badgeType),
       ],
     );
   }
