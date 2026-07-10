@@ -1,4 +1,3 @@
-
 abstract final class AppSpacing {
   const AppSpacing._();
 

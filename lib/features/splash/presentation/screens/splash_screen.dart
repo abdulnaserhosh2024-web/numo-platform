@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatelessWidget {
@@ -10,10 +9,7 @@ class SplashScreen extends StatelessWidget {
       body: Center(
         child: Text(
           'Numo',
-          style: TextStyle(
-            fontSize: 36,
-            fontWeight: FontWeight.bold,
-          ),
+          style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
         ),
       ),
     );

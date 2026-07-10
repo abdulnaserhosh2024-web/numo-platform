@@ -1,9 +1,4 @@
-
-enum LearnerStatus {
-  active,
-  archived,
-  inactive,
-}
+enum LearnerStatus { active, archived, inactive }
 
 class Learner {
   const Learner({

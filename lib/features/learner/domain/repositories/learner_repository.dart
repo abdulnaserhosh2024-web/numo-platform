@@ -1,4 +1,3 @@
-
 import '../entities/learner.dart';
 
 abstract interface class LearnerRepository {

@@ -1,10 +1,4 @@
-
-enum ProgressLevel {
-  excellent,
-  good,
-  needsImprovement,
-  critical,
-}
+enum ProgressLevel { excellent, good, needsImprovement, critical }
 
 class Progress {
   const Progress({

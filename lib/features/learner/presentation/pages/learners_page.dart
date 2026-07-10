@@ -11,25 +11,15 @@ class LearnersPage extends ConsumerWidget {
     final learners = ref.watch(learnersProvider);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Learners'),
-      ),
+      appBar: AppBar(title: const Text('Learners')),
       body: learners.when(
-        loading: () => const Center(
-          child: CircularProgressIndicator(),
-        ),
+        loading: () => const Center(child: CircularProgressIndicator()),
 
-        error: (error, stackTrace) => Center(
-          child: Text(
-            'Error: $error',
-          ),
-        ),
+        error: (error, stackTrace) => Center(child: Text('Error: $error')),
 
         data: (items) {
           if (items.isEmpty) {
-            return const Center(
-              child: Text('No learners found'),
-            );
+            return const Center(child: Text('No learners found'));
           }
 
           return ListView.separated(
@@ -39,15 +29,9 @@ class LearnersPage extends ConsumerWidget {
               final learner = items[index];
 
               return ListTile(
-                leading: CircleAvatar(
-                  child: Text(
-                    learner.fullName[0],
-                  ),
-                ),
+                leading: CircleAvatar(child: Text(learner.fullName[0])),
                 title: Text(learner.fullName),
-                subtitle: Text(
-                  learner.email ?? 'No email',
-                ),
+                subtitle: Text(learner.email ?? 'No email'),
               );
             },
           );

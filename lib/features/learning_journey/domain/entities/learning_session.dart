@@ -1,16 +1,6 @@
-enum LearningSessionStatus {
-  scheduled,
-  completed,
-  cancelled,
-  rescheduled,
-}
+enum LearningSessionStatus { scheduled, completed, cancelled, rescheduled }
 
-enum AttendanceStatus {
-  present,
-  absent,
-  late,
-  excused,
-}
+enum AttendanceStatus { present, absent, late, excused }
 
 class LearningSession {
   const LearningSession({

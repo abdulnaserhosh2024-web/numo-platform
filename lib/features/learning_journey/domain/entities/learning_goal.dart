@@ -1,17 +1,6 @@
+enum LearningGoalStatus { notStarted, inProgress, completed, paused, cancelled }
 
-enum LearningGoalStatus {
-  notStarted,
-  inProgress,
-  completed,
-  paused,
-  cancelled,
-}
-
-enum LearningGoalPriority {
-  low,
-  medium,
-  high,
-}
+enum LearningGoalPriority { low, medium, high }
 
 class LearningGoal {
   const LearningGoal({

@@ -1,10 +1,4 @@
-
-enum LearningJourneyStatus {
-  active,
-  paused,
-  completed,
-  cancelled,
-}
+enum LearningJourneyStatus { active, paused, completed, cancelled }
 
 class LearningJourney {
   const LearningJourney({
