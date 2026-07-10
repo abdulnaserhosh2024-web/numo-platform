@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../learning_workspace/presentation/pages/learning_workspace_page.dart';
 import '../providers/learners_provider.dart';
+import '../widgets/learner_card.dart';
 
 class LearnersPage extends ConsumerWidget {
   const LearnersPage({super.key});
@@ -14,24 +16,30 @@ class LearnersPage extends ConsumerWidget {
       appBar: AppBar(title: const Text('Learners')),
       body: learners.when(
         loading: () => const Center(child: CircularProgressIndicator()),
-
         error: (error, stackTrace) => Center(child: Text('Error: $error')),
-
         data: (items) {
           if (items.isEmpty) {
             return const Center(child: Text('No learners found'));
           }
 
           return ListView.separated(
+            padding: const EdgeInsets.all(16),
             itemCount: items.length,
-            separatorBuilder: (_, __) => const Divider(height: 1),
+            separatorBuilder: (_, __) {
+              return const SizedBox(height: 12);
+            },
             itemBuilder: (context, index) {
               final learner = items[index];
 
-              return ListTile(
-                leading: CircleAvatar(child: Text(learner.fullName[0])),
-                title: Text(learner.fullName),
-                subtitle: Text(learner.email ?? 'No email'),
+              return LearnerCard(
+                learner: learner,
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute<void>(
+                      builder: (_) => LearningWorkspacePage(learner: learner),
+                    ),
+                  );
+                },
               );
             },
           );
