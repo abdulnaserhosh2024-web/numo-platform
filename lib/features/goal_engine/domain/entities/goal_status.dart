@@ -1,9 +1,1 @@
-
-enum GoalStatus {
-  draft,
-  ready,
-  inProgress,
-  paused,
-  completed,
-  cancelled,
-}
+enum GoalStatus { draft, ready, inProgress, paused, completed, cancelled }

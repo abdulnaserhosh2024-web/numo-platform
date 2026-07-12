@@ -13,6 +13,11 @@ class Goal {
     required this.updatedAt,
     this.deadline,
   });
+  bool get isReadyToStart {
+    return title.trim().isNotEmpty &&
+        motivation.trim().isNotEmpty &&
+        successCriteria.trim().isNotEmpty;
+  }
 
   final String id;
   final String title;

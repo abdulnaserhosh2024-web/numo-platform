@@ -1,4 +1,3 @@
-
 enum GoalCategory {
   language,
   school,
