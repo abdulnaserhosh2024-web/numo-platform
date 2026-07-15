@@ -1,22 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../../shared/design_system/components/buttons/primary_button.dart';
 import '../../../../../shared/design_system/components/inputs/app_text_field.dart';
-import '../../../../../shared/design_system/components/progress/step_indicator.dart';
-import '../../../../../shared/design_system/tokens/app_spacing.dart';
-import '../../../../../shared/design_system/tokens/app_typography.dart';
+import '../../controllers/goal_discovery_controller.dart';
+import '../../widgets/goal_step_layout.dart';
 
-class GoalDiscoveryPage extends StatefulWidget {
+class GoalDiscoveryPage extends ConsumerStatefulWidget {
   const GoalDiscoveryPage({super.key});
 
   @override
-  State<GoalDiscoveryPage> createState() => _GoalDiscoveryPageState();
+  ConsumerState<GoalDiscoveryPage> createState() => _GoalDiscoveryPageState();
 }
 
-class _GoalDiscoveryPageState extends State<GoalDiscoveryPage> {
+class _GoalDiscoveryPageState extends ConsumerState<GoalDiscoveryPage> {
   final TextEditingController _controller = TextEditingController();
 
   bool get _canContinue => _controller.text.trim().isNotEmpty;
+
+  @override
+  void initState() {
+    super.initState();
+
+    final draft = ref.read(goalDiscoveryControllerProvider);
+    _controller.text = draft.desiredOutcome ?? '';
+  }
 
   @override
   void dispose() {
@@ -24,61 +31,40 @@ class _GoalDiscoveryPageState extends State<GoalDiscoveryPage> {
     super.dispose();
   }
 
+  void _onOutcomeChanged(String value) {
+    ref.read(goalDiscoveryControllerProvider.notifier).updateOutcome(value);
+
+    setState(() {});
+  }
+
   void _continue() {
-    // TODO: الانتقال إلى Step 2
-    debugPrint(_controller.text);
+    if (!_canContinue) {
+      return;
+    }
+
+    FocusScope.of(context).unfocus();
+
+    // TODO: الانتقال إلى صفحة الدافع.
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(AppSpacing.lg),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const SizedBox(height: AppSpacing.md),
+    ref.watch(goalDiscoveryControllerProvider);
 
-              const StepIndicator(currentStep: 1, totalSteps: 3),
-
-              const SizedBox(height: AppSpacing.xl),
-
-              Text(
-                'ما الذي تريد تحقيقه؟',
-                textAlign: TextAlign.right,
-                style: AppTypography.headline,
-              ),
-
-              const SizedBox(height: AppSpacing.md),
-
-              Text(
-                'تخيل أننا التقينا بعد عدة أشهر...\n'
-                'ما الشيء الذي تتمنى أن تكون قد حققته؟',
-                textAlign: TextAlign.right,
-                style: AppTypography.body,
-              ),
-
-              const SizedBox(height: AppSpacing.xl),
-
-              AppTextField(
-                controller: _controller,
-                label: 'ما تريد تحقيقه',
-                hintText: 'مثال: أريد الحصول على درجة 95 في الرياضيات.',
-                onChanged: (_) {
-                  setState(() {});
-                },
-              ),
-
-              const Spacer(),
-
-              PrimaryButton(
-                label: 'متابعة',
-                onPressed: _canContinue ? _continue : null,
-              ),
-            ],
-          ),
-        ),
+    return GoalStepLayout(
+      currentStep: 1,
+      totalSteps: 3,
+      title: 'ما الذي تريد تحقيقه؟',
+      description:
+          'تخيل أننا التقينا بعد عدة أشهر...\n'
+          'ما الشيء الذي تتمنى أن تكون قد حققته؟',
+      buttonLabel: 'متابعة',
+      onContinue: _canContinue ? _continue : null,
+      child: AppTextField(
+        controller: _controller,
+        label: 'ما تريد تحقيقه',
+        hintText: 'مثال: أريد الحصول على درجة 95 في الرياضيات.',
+        onChanged: _onOutcomeChanged,
       ),
     );
   }
