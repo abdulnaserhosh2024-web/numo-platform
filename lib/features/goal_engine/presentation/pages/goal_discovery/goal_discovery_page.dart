@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../shared/design_system/components/buttons/primary_button.dart';
+import '../../../../../shared/design_system/components/inputs/app_text_field.dart';
 import '../../../../../shared/design_system/components/progress/step_indicator.dart';
 import '../../../../../shared/design_system/tokens/app_spacing.dart';
 import '../../../../../shared/design_system/tokens/app_typography.dart';
@@ -15,10 +16,17 @@ class GoalDiscoveryPage extends StatefulWidget {
 class _GoalDiscoveryPageState extends State<GoalDiscoveryPage> {
   final TextEditingController _controller = TextEditingController();
 
+  bool get _canContinue => _controller.text.trim().isNotEmpty;
+
   @override
   void dispose() {
     _controller.dispose();
     super.dispose();
+  }
+
+  void _continue() {
+    // TODO: الانتقال إلى Step 2
+    debugPrint(_controller.text);
   }
 
   @override
@@ -53,24 +61,20 @@ class _GoalDiscoveryPageState extends State<GoalDiscoveryPage> {
 
               const SizedBox(height: AppSpacing.xl),
 
-              TextField(
+              AppTextField(
                 controller: _controller,
-                textDirection: TextDirection.rtl,
-                textAlign: TextAlign.right,
-                maxLines: 4,
-                decoration: const InputDecoration(
-                  hintText: 'مثال: الحصول على درجة 95 في الرياضيات.',
-                  border: OutlineInputBorder(),
-                ),
+                label: 'ما تريد تحقيقه',
+                hintText: 'مثال: أريد الحصول على درجة 95 في الرياضيات.',
+                onChanged: (_) {
+                  setState(() {});
+                },
               ),
 
               const Spacer(),
 
               PrimaryButton(
                 label: 'متابعة',
-                onPressed: () {
-                  // سنربطه بالخطوة التالية لاحقًا.
-                },
+                onPressed: _canContinue ? _continue : null,
               ),
             ],
           ),
