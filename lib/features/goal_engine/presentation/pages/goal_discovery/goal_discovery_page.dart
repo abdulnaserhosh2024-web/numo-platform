@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../../shared/design_system/components/inputs/app_text_field.dart';
 import '../../controllers/goal_discovery_controller.dart';
-import '../../widgets/goal_step_layout.dart';
+import '../../widgets/goal_question_step.dart';
+import 'goal_why_page.dart';
 
 class GoalDiscoveryPage extends ConsumerStatefulWidget {
   const GoalDiscoveryPage({super.key});
@@ -38,34 +38,32 @@ class _GoalDiscoveryPageState extends ConsumerState<GoalDiscoveryPage> {
   }
 
   void _continue() {
-    if (!_canContinue) {
-      return;
-    }
+    if (!_canContinue) return;
 
     FocusScope.of(context).unfocus();
 
-    // TODO: الانتقال إلى صفحة الدافع.
+    Navigator.of(
+      context,
+    ).push(MaterialPageRoute<void>(builder: (_) => const GoalWhyPage()));
   }
 
   @override
   Widget build(BuildContext context) {
     ref.watch(goalDiscoveryControllerProvider);
 
-    return GoalStepLayout(
+    return GoalQuestionStep(
       currentStep: 1,
       totalSteps: 3,
       title: 'ما الذي تريد تحقيقه؟',
       description:
           'تخيل أننا التقينا بعد عدة أشهر...\n'
           'ما الشيء الذي تتمنى أن تكون قد حققته؟',
-      buttonLabel: 'متابعة',
-      onContinue: _canContinue ? _continue : null,
-      child: AppTextField(
-        controller: _controller,
-        label: 'ما تريد تحقيقه',
-        hintText: 'مثال: أريد الحصول على درجة 95 في الرياضيات.',
-        onChanged: _onOutcomeChanged,
-      ),
+      label: 'ما تريد تحقيقه',
+      hintText: 'مثال: أريد الحصول على درجة 95 في الرياضيات.',
+      controller: _controller,
+      onChanged: _onOutcomeChanged,
+      onContinue: _continue,
+      canContinue: _canContinue,
     );
   }
 }
