@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../controllers/goal_discovery_controller.dart';
+import '../../widgets/goal_draft_card.dart';
 import '../../widgets/goal_question_step.dart';
+import 'goal_success_page.dart';
 
 class GoalWhyPage extends ConsumerStatefulWidget {
   const GoalWhyPage({super.key});
@@ -41,7 +43,9 @@ class _GoalWhyPageState extends ConsumerState<GoalWhyPage> {
 
     FocusScope.of(context).unfocus();
 
-    // TODO: الانتقال إلى GoalSuccessPage
+    Navigator.of(
+      context,
+    ).push(MaterialPageRoute<void>(builder: (_) => const GoalSuccessPage()));
   }
 
   @override
@@ -51,9 +55,10 @@ class _GoalWhyPageState extends ConsumerState<GoalWhyPage> {
     return GoalQuestionStep(
       currentStep: 2,
       totalSteps: 3,
+      header: const GoalDraftCard(),
       title: 'لماذا يعتبر هذا الهدف مهمًا بالنسبة لك؟',
       description: 'ما الذي سيتغير في حياتك عندما تحققه؟',
-      label: 'سبب الهدف',
+      label: 'سبب اهتمامك بهذا الهدف',
       hintText: 'مثال: أريد الدراسة في ألمانيا.',
       controller: _controller,
       onChanged: _onChanged,

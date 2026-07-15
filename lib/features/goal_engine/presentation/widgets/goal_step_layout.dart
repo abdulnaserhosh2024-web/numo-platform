@@ -15,19 +15,17 @@ class GoalStepLayout extends StatelessWidget {
     required this.child,
     required this.buttonLabel,
     required this.onContinue,
+    this.header,
   });
 
   final int currentStep;
   final int totalSteps;
-
   final String title;
   final String description;
-
   final Widget child;
-
   final String buttonLabel;
-
   final VoidCallback? onContinue;
+  final Widget? header;
 
   @override
   Widget build(BuildContext context) {
@@ -39,31 +37,26 @@ class GoalStepLayout extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const SizedBox(height: AppSpacing.md),
-
               StepIndicator(currentStep: currentStep, totalSteps: totalSteps),
-
               const SizedBox(height: AppSpacing.xl),
-
+              if (header != null) ...[
+                header!,
+                const SizedBox(height: AppSpacing.xl),
+              ],
               Text(
                 title,
                 textAlign: TextAlign.right,
                 style: AppTypography.headline,
               ),
-
               const SizedBox(height: AppSpacing.md),
-
               Text(
                 description,
                 textAlign: TextAlign.right,
                 style: AppTypography.body,
               ),
-
               const SizedBox(height: AppSpacing.xl),
-
               child,
-
               const Spacer(),
-
               PrimaryButton(label: buttonLabel, onPressed: onContinue),
             ],
           ),

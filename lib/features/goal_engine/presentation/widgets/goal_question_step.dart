@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import '../../../../shared/design_system/components/inputs/app_text_field.dart';
@@ -17,24 +16,20 @@ class GoalQuestionStep extends StatelessWidget {
     required this.onChanged,
     required this.onContinue,
     required this.canContinue,
+    this.header,
   });
 
   final int currentStep;
   final int totalSteps;
-
   final String title;
   final String description;
-
   final String label;
   final String hintText;
-
   final TextEditingController controller;
-
   final ValueChanged<String> onChanged;
-
   final VoidCallback onContinue;
-
   final bool canContinue;
+  final Widget? header;
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +38,7 @@ class GoalQuestionStep extends StatelessWidget {
       totalSteps: totalSteps,
       title: title,
       description: description,
+      header: header,
       buttonLabel: 'متابعة',
       onContinue: canContinue ? onContinue : null,
       child: AppTextField(

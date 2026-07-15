@@ -41,7 +41,7 @@ class CreateGoal {
       deadline: request.deadline,
     );
 
-    await repository.create(goal);
+    await repository.saveGoal(goal);
 
     return goal;
   }

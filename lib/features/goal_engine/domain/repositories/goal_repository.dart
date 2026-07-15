@@ -1,14 +1,11 @@
-
 import '../entities/goal.dart';
 
-abstract class GoalRepository {
-  Future<void> create(Goal goal);
+abstract interface class GoalRepository {
+  Future<void> saveGoal(Goal goal);
 
-  Future<Goal?> findById(String id);
+  Future<Goal?> getGoalById(String id);
 
-  Future<List<Goal>> findAll();
+  Future<List<Goal>> getGoals();
 
-  Future<void> update(Goal goal);
-
-  Future<void> delete(String id);
+  Future<void> deleteGoal(String id);
 }
