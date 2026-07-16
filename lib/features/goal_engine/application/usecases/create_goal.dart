@@ -1,48 +1,38 @@
+import 'dart:math';
+
 import '../../domain/entities/goal.dart';
 import '../../domain/entities/goal_category.dart';
 import '../../domain/entities/goal_status.dart';
 import '../../domain/repositories/goal_repository.dart';
-
-class CreateGoalRequest {
-  const CreateGoalRequest({
-    required this.id,
-    required this.title,
-    required this.category,
-    required this.motivation,
-    required this.successCriteria,
-    this.deadline,
-  });
-
-  final String id;
-  final String title;
-  final GoalCategory category;
-  final String motivation;
-  final String successCriteria;
-  final DateTime? deadline;
-}
+import '../../domain/value_objects/goal_draft.dart';
 
 class CreateGoal {
   const CreateGoal(this.repository);
 
   final GoalRepository repository;
 
-  Future<Goal> call(CreateGoalRequest request) async {
+  Future<Goal> call(GoalDraft draft) async {
     final now = DateTime.now();
 
     final goal = Goal(
-      id: request.id,
-      title: request.title.trim(),
-      category: request.category,
-      motivation: request.motivation.trim(),
-      successCriteria: request.successCriteria.trim(),
+      id: _generateId(),
+      title: draft.desiredOutcome!.trim(),
+      category: GoalCategory.other,
+      motivation: draft.motivation!.trim(),
+      successCriteria: draft.successCriteria!.trim(),
       status: GoalStatus.draft,
       createdAt: now,
       updatedAt: now,
-      deadline: request.deadline,
+      deadline: null,
     );
 
     await repository.saveGoal(goal);
 
     return goal;
+  }
+
+  String _generateId() {
+    final random = Random();
+    return '${DateTime.now().millisecondsSinceEpoch}${random.nextInt(99999)}';
   }
 }
