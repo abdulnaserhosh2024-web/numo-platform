@@ -30,33 +30,48 @@ class GoalStepLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(AppSpacing.lg),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const SizedBox(height: AppSpacing.md),
-              StepIndicator(currentStep: currentStep, totalSteps: totalSteps),
-              const SizedBox(height: AppSpacing.xl),
-              if (header != null) ...[
-                header!,
-                const SizedBox(height: AppSpacing.xl),
-              ],
-              Text(
-                title,
-                textAlign: TextAlign.right,
-                style: AppTypography.headline,
+              Expanded(
+                child: SingleChildScrollView(
+                  keyboardDismissBehavior:
+                      ScrollViewKeyboardDismissBehavior.onDrag,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      const SizedBox(height: AppSpacing.md),
+                      StepIndicator(
+                        currentStep: currentStep,
+                        totalSteps: totalSteps,
+                      ),
+                      const SizedBox(height: AppSpacing.xl),
+                      if (header != null) ...[
+                        header!,
+                        const SizedBox(height: AppSpacing.xl),
+                      ],
+                      Text(
+                        title,
+                        textAlign: TextAlign.right,
+                        style: AppTypography.headline,
+                      ),
+                      const SizedBox(height: AppSpacing.md),
+                      Text(
+                        description,
+                        textAlign: TextAlign.right,
+                        style: AppTypography.body,
+                      ),
+                      const SizedBox(height: AppSpacing.xl),
+                      child,
+                      const SizedBox(height: AppSpacing.lg),
+                    ],
+                  ),
+                ),
               ),
               const SizedBox(height: AppSpacing.md),
-              Text(
-                description,
-                textAlign: TextAlign.right,
-                style: AppTypography.body,
-              ),
-              const SizedBox(height: AppSpacing.xl),
-              child,
-              const Spacer(),
               PrimaryButton(label: buttonLabel, onPressed: onContinue),
             ],
           ),
