@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/material.dart';
 
 import '../../../domain/entities/goal.dart';
@@ -6,9 +8,6 @@ import '../../../../../shared/design_system/tokens/app_colors.dart';
 import '../../../../../shared/design_system/tokens/app_radius.dart';
 import '../../../../../shared/design_system/tokens/app_spacing.dart';
 import '../../../../../shared/design_system/tokens/app_typography.dart';
-import '../../widgets/workspace/todays_mission_card.dart';
-import '../../widgets/workspace/workspace_greeting.dart';
-import '../../widgets/workspace/workspace_stats_card.dart';
 
 class GoalWorkspacePage extends StatelessWidget {
   const GoalWorkspacePage({super.key, required this.goal});
@@ -26,22 +25,18 @@ class GoalWorkspacePage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const WorkspaceGreeting(),
-
-              const SizedBox(height: AppSpacing.xl),
-
               _WorkspaceHeader(title: goal.title, progress: progress),
-
-              const SizedBox(height: AppSpacing.lg),
-
-              const TodaysMissionCard(),
-
-              const SizedBox(height: AppSpacing.lg),
-
-              const WorkspaceStatsCard(),
-
-              const SizedBox(height: AppSpacing.lg),
-
+              const SizedBox(height: AppSpacing.xl),
+              const AppInfoCard(
+                title: 'الخطوة التالية',
+                child: Text(
+                  'لم يتم بناء خطتك التعليمية بعد.\n'
+                  'سنبدأ قريبًا بتحديد أول خطوة عملية نحو هدفك.',
+                  textAlign: TextAlign.right,
+                  style: AppTypography.body,
+                ),
+              ),
+              const SizedBox(height: AppSpacing.md),
               AppInfoCard(
                 title: 'لماذا هذا الهدف مهم؟',
                 child: Text(
@@ -50,9 +45,7 @@ class GoalWorkspacePage extends StatelessWidget {
                   style: AppTypography.body,
                 ),
               ),
-
               const SizedBox(height: AppSpacing.md),
-
               AppInfoCard(
                 title: 'كيف ستعرف أنك نجحت؟',
                 child: Text(
